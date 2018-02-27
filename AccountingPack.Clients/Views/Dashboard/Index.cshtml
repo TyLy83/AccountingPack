@@ -1,0 +1,19 @@
+@model AccountingPack.Models.Business
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row">
+    <div class="col-md-3 col-lg-3">
+        @Html.Partial("_LeftNav")
+    </div>
+    <div id="admin-area" class="col-md-9 col-lg-9">
+        @Html.Partial("_Business", Model)
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript">
+        business.load();
+    </script>
+}

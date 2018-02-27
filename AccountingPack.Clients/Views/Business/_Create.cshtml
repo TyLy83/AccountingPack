@@ -1,0 +1,85 @@
+@using Microsoft.AspNetCore.Identity
+@using AccountingPack.Models
+@model AccountingPack.Models.Business
+
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    var email = UserManager.GetUserName(User);
+}
+
+
+<form id="business" asp-action="Create">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id"  />
+        <input type="hidden" asp-for="AddressId"  />
+        <input type="hidden" asp-for="Address.ContactEmail" value="@email" />
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input asp-for="BusinessName" class="ap-form-control"
+                           placeholder="@Html.DisplayNameFor(m=>m.BusinessName)" />
+                    <span asp-validation-for="BusinessName" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <input asp-for="Address.AddressLine1" class="ap-form-control"
+                           placeholder="@Html.DisplayNameFor(m=>m.Address.AddressLine1)" />
+                    <span asp-validation-for="Address.AddressLine1" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <input asp-for="Address.AddressLine2" class="ap-form-control"
+                           placeholder="@Html.DisplayNameFor(m=>m.Address.AddressLine2)" />
+                    <span asp-validation-for="Address.AddressLine2" class="text-danger"></span>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <input asp-for="Address.AddressState" class="ap-form-control"
+                           placeholder="@Html.DisplayNameFor(m=>m.Address.AddressState)" />
+                    <span asp-validation-for="Address.AddressState" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <input asp-for="Address.Country" class="ap-form-control"
+                           placeholder="@Html.DisplayNameFor(m=>m.Address.Country)" />
+                    <span asp-validation-for="Address.Country" class="text-danger"></span>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <input asp-for="Address.ZipCode" class="ap-form-control"
+                           placeholder="@Html.DisplayNameFor(m=>m.Address.ZipCode)" />
+                    <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <input asp-for="Address.ContactNumber" class="ap-form-control"
+                           placeholder="@Html.DisplayNameFor(m=>m.Address.ContactNumber)" />
+                    <span asp-validation-for="Address.ContactNumber" class="text-danger"></span>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="submit" value="Create" class="btn btn-default btn-create" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    business.submit();
+</script>
+
