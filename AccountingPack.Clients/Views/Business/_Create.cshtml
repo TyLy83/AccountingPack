@@ -5,17 +5,16 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @{
-    var email = UserManager.GetUserName(User);
-}
+    string email = UserManager.GetUserName(User);
 
+}
 
 <form id="business" asp-action="Create">
     <div class="form-horizontal">
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="Id"  />
-        <input type="hidden" asp-for="AddressId"  />
         <input type="hidden" asp-for="Address.ContactEmail" value="@email" />
+
         <div class="row">
             <div class="form-group">
                 <div class="col-md-12">

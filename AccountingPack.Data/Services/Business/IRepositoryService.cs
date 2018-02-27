@@ -15,7 +15,6 @@ namespace AccountingPack.Data
         void Edit(T model);
         void Delete(T model);
         List<T> List(Func<T, bool> predicate = null);
-        List<T> List(int? businessId = null);
         void SaveChanges();
     }
 }

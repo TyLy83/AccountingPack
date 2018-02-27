@@ -109,7 +109,6 @@ namespace AccountingPack.Models
 
         public virtual ContactDetail Address { get; set; }
 
-        //public virtual List<BusinessLoginUser> LoginUsers { get; set; }
         public virtual List<LoginUser> LoginUsers { get; set; }
 
     }

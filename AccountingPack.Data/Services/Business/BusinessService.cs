@@ -31,7 +31,7 @@ namespace AccountingPack.Data
         {
 
             if (model == null)
-            throw new ArgumentNullException();
+                throw new ArgumentNullException();
 
             _db.Entry(model).State = EntityState.Deleted;
 
@@ -40,7 +40,7 @@ namespace AccountingPack.Data
         public Business Detail(int? id)
         {
 
-            if (id==null)
+            if (id == null)
                 throw new ArgumentNullException("Id Is Null");
 
             Business entity = _db.Businesses.FirstOrDefault(b => b.Id == id.Value);
@@ -64,11 +64,6 @@ namespace AccountingPack.Data
 
             return models;
 
-        }
-
-        public List<Business> List(int? businessId = null)
-        {
-            throw new NotImplementedException();
         }
 
         public void SaveChanges()

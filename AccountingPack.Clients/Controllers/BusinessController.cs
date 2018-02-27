@@ -6,7 +6,9 @@ using AccountingPack.Data;
 using AccountingPack.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.Extensions.Logging;
 
 namespace AccountingPack.Clients.Controllers
 {
@@ -15,14 +17,18 @@ namespace AccountingPack.Clients.Controllers
 
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IRepositoryService<Business> _businessService;
+        private readonly ILogger _logger;
 
         public BusinessController(ICompositeViewEngine viewEngine,
+            ILoggerFactory loggerFactory,
             UserManager<ApplicationUser> userManager,
             IRepositoryService<Business> businessService)
             : base(viewEngine)
         {
             _userManager = userManager;
             _businessService = businessService;
+            _logger = loggerFactory.CreateLogger<BusinessController>();
+
         }
 
         public IActionResult Index()
@@ -50,12 +56,27 @@ namespace AccountingPack.Clients.Controllers
 
             if (!ModelState.IsValid)
             {
+
                 result.View = await RenderPartialViewToString("_Create", model);
+
             }
             else
             {
-                result.Success = true;
-                result.Redirect = Url.Action("Business", "Dashboard");
+                try {
+
+                    _businessService.Create(model);
+                    _businessService.SaveChanges();
+
+                    result.Success = true;
+                    result.Redirect = Url.Action("Business", "Dashboard");
+
+                }
+                catch (Exception ex)
+                {
+                    result.View = await RenderPartialViewToString("_Create", model);
+                    _logger.LogError(ex.Message);
+                }
+
             }
 
             return Json(result);

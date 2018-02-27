@@ -73,12 +73,6 @@ namespace AccountingPack.Data
 
         }
 
-        public List<LoginUser> List(int? businessId = null)
-        {
-
-            return null;
-        }
-
         public void SaveChanges()
         {
             _db.SaveChanges();
