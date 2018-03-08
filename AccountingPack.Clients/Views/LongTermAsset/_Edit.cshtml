@@ -1,0 +1,31 @@
+@model AccountingPack.Models.LongTermAsset
+
+<div class="col-md-12">
+    <form asp-action="Edit" class="ap-form">
+        <div class="form-horizontal">
+            <h4>LongTermAsset</h4>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AccDepId" />
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Category" />
+            <input type="hidden" asp-for="BusinessId" />
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input asp-for="Name" class="ap-form-control"
+                           placeholder="@Html.DisplayNameFor(m=>m.Name)" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div id="depreciation" class="form-group">
+                @Html.Partial("_AddDep", Model)
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="submit" value="Save" class="btn btn-default ap-submit" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

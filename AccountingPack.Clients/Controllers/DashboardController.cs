@@ -7,50 +7,65 @@ using AccountingPack.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 
 namespace AccountingPack.Clients.Controllers
 {
     [Authorize]
-    public class DashboardController : Controller
+    public class DashboardController : BaseController
     {
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IRepositoryService<Business> _businessService;
-        private readonly IRepositoryService<LoginUser> _loginUser;
+        private readonly IRepositoryService<AccountBaseEntitie> _entityService;
 
-        public DashboardController(UserManager<ApplicationUser> userManager,
+        public DashboardController(ICompositeViewEngine viewEngine,
+            UserManager<ApplicationUser> userManager,
             IRepositoryService<Business> businessService,
-            IRepositoryService<LoginUser> loginUser)
+            IRepositoryService<LoginUser> loginUser,
+            IRepositoryService<AccountOwner> businessOwner,
+            IRepositoryService<AccountBaseEntitie> entityService)
+            : base(viewEngine,businessOwner, userManager, loginUser)
         {
-            _userManager = userManager;
             _businessService = businessService;
-            _loginUser = loginUser;
+            _entityService = entityService;
         }
 
         public IActionResult Index()
         {
 
-            int id = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
+            AccountOwner owner = BusinessOwner();
 
-            LoginUser user = _loginUser.Detail(id);
+            if (owner == null)
+                return View();
 
-            Business model = _businessService.List(b => b.Owner.Id == user.Id).FirstOrDefault();
-
-            ViewBag.Email = user.UserName;
-
-            return View(model);
+            return View(owner.Business);
 
         }
 
+        /// <summary>
+        /// business dashboard
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Business()
         {
 
-            int id = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
+            AccountOwner owner = BusinessOwner();
 
-            LoginUser user = _loginUser.Detail(id);
+            return PartialView("_Business", owner.Business);
 
-            Business model = _businessService.List(b => b.Owner.Id == user.Id).FirstOrDefault();
+        }
 
-            return PartialView("_Business", model);
+        /// <summary>
+        /// entity dashboard
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Entity()
+        {
+
+            AccountOwner owner = BusinessOwner();
+
+            List<AccountBaseEntitie> models = _entityService.List(m=>m.BusinessId == owner.BusinessId);
+
+            return PartialView("_Entities", models);
 
         }
     }

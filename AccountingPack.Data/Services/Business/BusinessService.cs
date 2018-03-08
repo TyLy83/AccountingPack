@@ -43,7 +43,10 @@ namespace AccountingPack.Data
             if (id == null)
                 throw new ArgumentNullException("Id Is Null");
 
-            Business entity = _db.Businesses.FirstOrDefault(b => b.Id == id.Value);
+            Business entity = _db.Businesses
+                                 .Include(b=>b.Owner)
+                                 .Include(b=>b.Address)
+                                 .FirstOrDefault(b => b.Id == id.Value);
 
             if (entity != null)
                 return entity;
@@ -54,15 +57,35 @@ namespace AccountingPack.Data
 
         public void Edit(Business model)
         {
-            throw new NotImplementedException();
+
+            if (model == null)
+                throw new ArgumentNullException();
+
+            ContactDetail contact = _db.Contacts.FirstOrDefault(c => c.Id == model.AddressId);
+
+            if(contact != null)
+            {
+                contact.AddressLine1 = model.Address.AddressLine1;
+                contact.AddressLine2 = model.Address.AddressLine2;
+                contact.AddressState = model.Address.AddressState;
+                contact.Country = model.Address.Country;
+                contact.ZipCode = model.Address.ZipCode;
+                contact.ContactNumber = model.Address.ContactNumber;
+                contact.ContactEmail = model.Address.ContactEmail;
+
+                model.Address = contact;
+            }
+
+            _db.Entry(model).State = EntityState.Modified;
+
         }
 
         public List<Business> List(Func<Business, bool> predicate = null)
         {
 
-            List<Business> models = _db.Businesses.Where(predicate).ToList();
-
-            return models;
+            return _db.Businesses
+                      .Where(predicate)
+                      .ToList();
 
         }
 

@@ -58,6 +58,10 @@ namespace AccountingPack.Clients
             // Add Data resource services.
             services.AddTransient<IRepositoryService<LoginUser>, LoginUserService>();
             services.AddTransient<IRepositoryService<Business>, BusinessService>();
+            services.AddTransient<IRepositoryService<AccountOwner>, BusinessOwnerService>();
+            services.AddTransient<IRepositoryService<AccountBaseEntitie>, EntityService>();
+            services.AddTransient<IRepositoryService<CurrentAsset>, CurrentAssetService>();
+            services.AddTransient<IRepositoryService<LongTermAsset>, LongTermAssetService>();
 
         }
 

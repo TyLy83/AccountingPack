@@ -1,0 +1,24 @@
+@model AccountingPack.Models.LongTermAsset
+
+@if (Model != null && Model.Depreciation != null)
+{
+    <div class="col-md-12">
+        <p>
+            Depreciation <button id="remove-dep" class="btn btn-default"><i class="fa fa-minus"></i></button>
+        </p>
+    </div>
+    <div class="col-md-12">
+        <input asp-for="Depreciation.Name" class="ap-form-control"
+               placeholder="Depreciation" />
+        <span asp-validation-for="Depreciation.Name" class="text-danger"></span>
+    </div>
+}
+else
+{
+    <div class="col-md-12">
+        <p>
+            Depreciation <button id="add-dep" class="btn btn-default"><i class="fa fa-plus"></i></button>
+        </p>
+    </div>
+}
+

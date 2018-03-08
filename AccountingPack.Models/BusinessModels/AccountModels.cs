@@ -1,6 +1,7 @@
 ﻿using AccountingPack.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
@@ -23,8 +24,10 @@ namespace AccountingPack.Models
             Category = cat;
         }
 
+        [Key]
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Required")]
         public string Name { get; set; }
 
         public AccountCategory Category { get; set; }
@@ -65,7 +68,7 @@ namespace AccountingPack.Models
     public class LongTermAsset : AccountBaseEntitie
     {
 
-        public LongTermAsset() { }
+        public LongTermAsset() : base() { }
 
         public LongTermAsset(int id, string name, int businessId, int? accDepId)
             : base(id, name, businessId, AccountCategory.LongTermAssets)
@@ -88,6 +91,8 @@ namespace AccountingPack.Models
     public class Depreciation : AccountBaseEntitie
     {
 
+        public Depreciation() : base() { }
+
         public Depreciation(int id, string name, int businessId)
             : base(id, name, businessId, AccountCategory.Depreciations)
         {
@@ -101,6 +106,11 @@ namespace AccountingPack.Models
     /// </summary>
     public class CurrentLiability : AccountBaseEntitie
     {
+
+        public CurrentLiability(): base()
+        {
+
+        }
 
         public CurrentLiability(int id, string name, int businessId)
             : base(id, name, businessId, AccountCategory.CurrentLiabilities)
@@ -116,6 +126,8 @@ namespace AccountingPack.Models
     public class LongTermLiability : AccountBaseEntitie
     {
 
+        public LongTermLiability(): base() { }
+
         public LongTermLiability(int id, string name, int businessId)
             : base(id, name, businessId, AccountCategory.LongTermLiabilities)
         {
@@ -129,6 +141,8 @@ namespace AccountingPack.Models
     /// </summary>
     public class Equity : AccountBaseEntitie
     {
+
+        public Equity() : base() { }
 
         public Equity(int id, string name, int businessId)
             : base(id, name, businessId, AccountCategory.Equities)
@@ -144,6 +158,8 @@ namespace AccountingPack.Models
     public class Expense : AccountBaseEntitie
     {
 
+        public Expense() : base() { }
+
         public Expense(int id, string name, int businessId)
             : base(id, name, businessId, AccountCategory.Expenses)
         {
@@ -158,6 +174,8 @@ namespace AccountingPack.Models
     public class Revenue : AccountBaseEntitie
     {
 
+        public Revenue() : base() { }
+
         public Revenue(int id, string name, int businessId)
             : base(id, name, businessId, AccountCategory.Revenues)
         {
@@ -171,6 +189,8 @@ namespace AccountingPack.Models
     /// </summary>
     public class Withdrawing : AccountBaseEntitie
     {
+        public Withdrawing() : base() { }
+
         public Withdrawing(int id, string name, int businessId)
             : base(id, name, businessId, AccountCategory.Withdrawing)
         {
@@ -183,6 +203,9 @@ namespace AccountingPack.Models
     /// </summary>
     public class Dividen : AccountBaseEntitie
     {
+
+        public Dividen() : base() { }
+
         public Dividen(int id, string name, int businessId)
             : base(id, name, businessId, AccountCategory.Dividens)
         {

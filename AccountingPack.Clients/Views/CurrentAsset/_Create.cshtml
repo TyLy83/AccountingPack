@@ -1,0 +1,29 @@
+@model AccountingPack.Models.CurrentAsset
+@using AccountingPack.Enums
+@{ 
+    int? businessId = ViewBag.BusinessId;
+}
+
+<div class="col-md-12">
+    <form asp-action="Create" class="ap-form">
+        <div class="form-horizontal">
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Category" value="@AccountCategory.CurrentAssets" />
+            <input type="hidden" asp-for="BusinessId" value="@businessId" />
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input asp-for="Name" placeholder="@Html.DisplayNameFor(m=>m.Name)" 
+                           class="ap-form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="submit" value="Create" class="btn btn-default ap-submit" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

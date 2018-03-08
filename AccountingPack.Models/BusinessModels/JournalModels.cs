@@ -49,7 +49,7 @@ namespace AccountingPack.Models
     }
 
     /// <summary>
-    /// Purchase journal
+    /// purchase journal
     /// </summary>
     public class PurchaseJournal : Journal
     {
@@ -76,7 +76,7 @@ namespace AccountingPack.Models
     }
 
     /// <summary>
-    /// Sale journal
+    /// sale journal
     /// </summary>
     public class SaleJournal : Journal
     {

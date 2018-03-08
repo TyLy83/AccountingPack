@@ -2,17 +2,20 @@
 @model AccountingPack.Models.Business
 
 @{
-    ApplicationUser loginUser = ViewBag.LoginUser;
+    LoginUser loginUser = ViewBag.LoginUser;
 }
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <form id="business" asp-action="Create" class="ap-form">
+    <form id="business" asp-action="Edit" class="ap-form">
         <div class="form-horizontal">
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Address.ContactEmail" value="@loginUser.Email" />
-            <input type="hidden" asp-for="Owner.UserName" value="@loginUser.UserName" />
-            <input type="hidden" asp-for="Owner.Id" value="@loginUser.Id" />
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Address.ContactEmail" />
+            <input type="hidden" asp-for="Owner.UserName" />
+            <input type="hidden" asp-for="Owner.Id" />
+            <input type="hidden" asp-for="AddressId" />
+            <input type="hidden" asp-for="Address.Id" />
             <div class="row">
                 <div class="form-group">
                     <div class="col-md-12">
@@ -70,7 +73,7 @@
             <div class="row">
                 <div class="form-group">
                     <div class="col-md-12">
-                        <input type="submit" value="Create" class="btn btn-default ap-submit" />
+                        <input type="submit" value="Save" class="btn btn-default ap-submit" />
                     </div>
                 </div>
             </div>

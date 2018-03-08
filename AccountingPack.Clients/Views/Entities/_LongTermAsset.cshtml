@@ -1,0 +1,39 @@
+@model AccountingPack.Models.LongTermAsset
+@using AccountingPack.Enums
+
+@{
+    int? businessId = ViewBag.BusinessId;
+}
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <form id="business" asp-action="LongTermAsset" class="ap-form">
+        <div class="form-horizontal">
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Category" value="@AccountCategory.LongTermAssets" />
+            <input type="hidden" asp-for="BusinessId" value="@businessId" />
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input asp-for="Name" class="ap-form-control"
+                           placeholder="@Html.DisplayNameFor(m=>m.Name)" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div id="depreciation" class="form-group">
+                @if (Model != null && Model.Depreciation != null)
+                {
+                    @Html.Partial("_AddDep", Model.Depreciation)
+                }
+                else
+                {
+                    @Html.Partial("_RemoveDep")
+                }
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="submit" value="Create" class="btn btn-default ap-submit" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

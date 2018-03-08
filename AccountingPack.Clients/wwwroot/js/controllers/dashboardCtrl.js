@@ -1,32 +1,66 @@
-﻿var business = {
+﻿// dashboard js controllers
+var dashboardCtrl = {
     load: function () {
-        $('.btn').click(function (e) {
-            e.preventDefault();
-            var url = $(this).data('url');
-
-            if (typeof url !== 'undefined') {
-                $('#admin-area').load(url);
-            }
-        })
+        var adminArea = $('#admin-area');
+        var btnItems = $('.btn-item');
+        var apForm = $('.ap-form');
+        $.each(btnItems, function (index, btn) {
+            $(btn).click(function (e) {
+                e.preventDefault();
+                var url = $(this).data('url');
+                if (typeof url !== 'undefined') {
+                    adminArea.load(url, function () {
+                        dashboardCtrl.load();
+                        dashboardCtrl.submit();
+                        dashboardCtrl.depreciation();
+                    })
+                }
+            })
+        });
     },
     submit: function () {
-        var form = $('#business');
-        var url = form.attr('action');
-        var btn = $('.btn-create');
-        btn.click(function (e) {
+        var adminArea = $('#admin-area');
+        var apForm = $('.ap-form');
+        var apSubmit = $('.ap-submit');
+        apSubmit.click(function (e) {
             e.preventDefault();
-            $.post(url, form.serialize()).done(function (data) {
-                if (!data.success)
-                    $('#admin-area').html(data.view);
-                else
-                    $('#admin-area').load(data.redirect);
+            var url = apForm.attr('action');
+            var data = apForm.serialize();
+            $.post(url, data).done(function (result) {
+                if (!result.success) {
+                    adminArea.html(result.view);
+                    dashboardCtrl.load();
+                    dashboardCtrl.submit();
+                    dashboardCtrl.depreciation();
+                } else {
+                    adminArea.load(result.redirect, function () {
+                        dashboardCtrl.load();
+                        dashboardCtrl.submit();
+                        dashboardCtrl.depreciation();
+                    })
+                }
             })
-        })
-    }
-}
+        });
+    },
+    depreciation: function () {
+        var depr = $('#depreciation');
+        var btnAdd = $('#add-dep');
+        var btnRemove = $('#remove-dep');
 
-var dashboardCtrl = {
-    createBusiness: function () {
+        btnAdd.click(function (e) {
+            e.preventDefault();
+            depr.load('/Entities/AddDep', function () {
+                dashboardCtrl.depreciation();
+            });
+
+        });
+
+        btnRemove.click(function (e) {
+            e.preventDefault();
+            depr.load('/Entities/RemoveDep', function () {
+                dashboardCtrl.depreciation();
+            })
+        });
 
     }
 }
